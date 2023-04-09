@@ -1,5 +1,5 @@
 class IntersectionService {
-  detectElementByScroll() {
+  detectElementByScroll () {
     window.addEventListener('scroll', () => {
       if (window.scrollY + window.innerHeight >= document.body.scrollHeight) {
         console.log('At bottom!')
@@ -9,7 +9,7 @@ class IntersectionService {
     })
   }
 
-  detectElementByIntersection() {
+  detectElementByIntersection () {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
