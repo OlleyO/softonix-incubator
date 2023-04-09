@@ -1,5 +1,5 @@
 <template>
-  <div class="sticky-panel p-4 pb-0">
+  <div id="sticky-panel" class="sticky-panel p-4 pb-0">
     <h3 class="font-medium">Countries</h3>
 
     <hr class="mt-2">
