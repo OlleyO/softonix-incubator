@@ -8,6 +8,20 @@ class IntersectionService {
       }
     })
   }
+
+  detectElementByIntersection () {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          console.log('[Intersection] at bottom!')
+        } else {
+          console.log('[Intersection] not yet!')
+        }
+      })
+    }, {})
+
+    observer.observe(document.getElementById('bottom-item') as any)
+  }
 }
 
 export const intersectionService = new IntersectionService()
