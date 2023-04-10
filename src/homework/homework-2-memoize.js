@@ -51,9 +51,45 @@ export function memoize (originFn, options = {}) {
   }
 }
 
+const withMemoSimplified = (originFn, options = {}) => {
+  const {
+    transformArgsFn = (...args) => args
+  } = options
+
+  const cache = {
+    isCached: false,
+    subFunctions: new Map(),
+    result: null
+  }
+
+  return (...args) => {
+    const sortedArgs = transformArgsFn(...args)
+
+    if (!sortedArgs.length) {
+      if (!cache.isCached) {
+        cache.result = originFn()
+        cache.isCached = true
+      }
+
+      return cache.result
+    }
+
+    const [arg, ...otherArgs] = sortedArgs
+    const cacheKey = arg
+
+    if (!cache.subFunctions.has(cacheKey)) {
+      cache.subFunctions.set(cacheKey, withMemoSimplified((...theArgs) => originFn(arg, ...theArgs)))
+    }
+
+    const subFunction = cache.subFunctions.get(cacheKey)
+
+    return subFunction(...otherArgs)
+  }
+}
+
 // приклад виконання вашого коду
-const sumMemoized = memoize(sum)
+const sumMemoized = withMemoSimplified(sum, { transformArgsFn: (...args) => args.sort() })
 
 console.log(sumMemoized(1, 3)) // результат 4
-console.log(sumMemoized(3, 3)) // результат 6
-console.log(sumMemoized(1, 3)) // результат 4, відбулось повторне виконання, результат повернуто з кешу без виклику додавання
+// console.log(sumMemoized(3, 3)) // результат 6
+console.log(sumMemoized(3, 1)) // результат 4, відбулось повторне виконання, результат повернуто з кешу без виклику додавання
