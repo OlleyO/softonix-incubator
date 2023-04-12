@@ -26,6 +26,7 @@ enum EInsertType {
   prepend
 }
 
+// Type for predicate function, so that code duplication is ommited
 type TPredicateFunction<T> = (el: T) => boolean
 
 class Collection<T> {
