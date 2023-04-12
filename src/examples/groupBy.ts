@@ -25,7 +25,7 @@ function groupBy<
   }, {} as Record<PropertyKey, T[]>)
 }
 
-const hashedPersons = groupBy(persons, 'name')
+const hashedPersons = groupBy(persons, 'age')
 
 export {
   hashedPersons

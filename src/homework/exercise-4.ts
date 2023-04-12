@@ -26,6 +26,8 @@ enum EInsertType {
   prepend
 }
 
+type TPredicateFunction<T> = (el: T) => boolean
+
 class Collection<T> {
   private elements: T[] = []
 
@@ -45,11 +47,11 @@ class Collection<T> {
     }
   }
 
-  contains (predicate: (el: T) => boolean) {
+  contains (predicate: TPredicateFunction<T>) {
     return this.elements.find(predicate) !== undefined
   }
 
-  delete (predicate: (el: T) => boolean) {
+  delete (predicate: TPredicateFunction<T>) {
     this.elements = this.elements.filter(predicate)
   }
 }
