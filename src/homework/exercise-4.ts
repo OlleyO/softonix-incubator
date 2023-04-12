@@ -21,11 +21,6 @@ interface IUser {
   name: string
 }
 
-enum EInsertType {
-  append,
-  prepend
-}
-
 // Type for predicate function, so that code duplication is ommited
 type TPredicateFunction<T> = (el: T) => boolean
 
@@ -40,10 +35,10 @@ class Collection<T> {
     return this.elements
   }
 
-  add (el: T, type: EInsertType = EInsertType.append) {
-    if (type === EInsertType.append) {
+  add (el: T, type: 'append' | 'prepend' = 'append') {
+    if (type === 'append') {
       this.elements.push(el)
-    } else if (type === EInsertType.prepend) {
+    } else if (type === 'prepend') {
       this.elements.unshift(el)
     }
   }
