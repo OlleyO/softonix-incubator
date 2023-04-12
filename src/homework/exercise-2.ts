@@ -16,9 +16,9 @@ interface IAdmin {
   role: string
 }
 
-type TPerson = unknown
+type TPerson = IUser | IAdmin
 
-const persons: IUser[] /* <- замінити на IPerson[] */ = [
+const persons: TPerson[] /* <- замінити на IPerson[] */ = [
   {
     name: 'Max Mustermann',
     age: 25,
@@ -41,7 +41,7 @@ const persons: IUser[] /* <- замінити на IPerson[] */ = [
   }
 ]
 
-function logPerson (user: IUser) {
+function logPerson (user: TPerson) {
   console.log(` - ${user.name}, ${user.age}`)
 }
 

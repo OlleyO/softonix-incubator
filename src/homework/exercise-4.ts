@@ -21,10 +21,15 @@ interface IUser {
   name: string
 }
 
-class Collection {
-  private elements = []
+enum EInsertType {
+  append,
+  prepend
+}
 
-  constructor (elements = []) {
+class Collection<T> {
+  private elements: T[] = []
+
+  constructor (elements: T[] = []) {
     this.elements = elements
   }
 
@@ -32,26 +37,30 @@ class Collection {
     return this.elements
   }
 
-  add (el, type) {
-    // ...
+  add (el: T, type: EInsertType = EInsertType.append) {
+    if (type === EInsertType.append) {
+      this.elements.push(el)
+    } else if (type === EInsertType.prepend) {
+      this.elements.unshift(el)
+    }
   }
 
-  contains (predicate) {
-    // ...
+  contains (predicate: (el: T) => boolean) {
+    return this.elements.find(predicate) !== undefined
   }
 
-  delete (predicate) {
-    // ...
+  delete (predicate: (el: T) => boolean) {
+    this.elements = this.elements.filter(predicate)
   }
 }
 
-const stringCollection = new Collection()
+const stringCollection = new Collection<string>()
 stringCollection.add('Hello, World!')
 stringCollection.contains(el => el === 'Hello, TS')
 
 const strings = stringCollection.get()
 
-const userCollection = new Collection()
+const userCollection = new Collection<IUser>()
 userCollection.add({ id: 1, name: 'Viktor' })
 userCollection.delete(el => el.id === 1)
 const users = userCollection.get()
