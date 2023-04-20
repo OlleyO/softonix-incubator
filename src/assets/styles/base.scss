@@ -8,6 +8,18 @@ html {
   
 }
 
+@media screen and (max-width: 1250px) {
+  html {
+    font-size: 14px
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  html {
+    font-size: 12px;
+  }
+}
+
 body {
   @apply font-main text-base text-primary bg-gray-light;
   -webkit-font-smoothing: antialiased;
@@ -15,6 +27,7 @@ body {
 
 html, body {
   background-color: #faf8ed;
+  overflow-x: hidden;
 }
 
 a {
