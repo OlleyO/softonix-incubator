@@ -1,8 +1,22 @@
 <template>
   <div class="max-w-[1440px] p-6">
-    <h3 class="font-medium m-0">Contact list</h3>
+    <header class="flex justify-between items-center">
+      <h3 class="font-medium m-0">Contact list</h3>
+      <button
+        class="border rounded-xl p-2 hover:bg-blue-900 text-white bg-blue-500"
+        @click="newContactMode = true"
+      >
+        Add contact
+      </button>
+    </header>
 
     <div class="contact-list grid-cols-[repeat(auto-fill,_minmax(320px,_1fr))] grid gap-5 my-5">
+      <ContactItem
+        v-if="newContactMode"
+        newContactForm
+        @create="onContactCreate"
+        @cancelCreate="newContactMode=false"
+      />
       <ContactItem
         v-for="(contact, index) in contacts"
         :key="contact.id"
@@ -18,6 +32,8 @@
 import { ref } from 'vue'
 import type { IContact } from '@/types'
 import ContactItem from '@/components/ContactItem.vue'
+
+const newContactMode = ref(false)
 
 const contacts = ref<IContact[]>([
   {
@@ -47,4 +63,15 @@ function deleteContact (index: number) {
 function onContactSave (contact: IContact, index: number) {
   contacts.value[index] = { ...contact }
 }
+
+function onContactCreate (contact: Omit<IContact, 'id'>) {
+  console.log('here')
+  contacts.value.unshift({
+    id: Date.now(),
+    ...contact
+  })
+
+  newContactMode.value = false
+}
+
 </script>
