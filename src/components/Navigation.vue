@@ -2,7 +2,7 @@
   <nav class="flex items-center text-blue-dark text-base font-poppins font-normal">
     <ul class="flex items-center gap-9">
       <li>
-        <router-link :class="['link', {'active': currentRouteName === '/'} ]" to="/">Home</router-link>
+        <router-link class="link" to="/">Home</router-link>
       </li>
       <li>
         <router-link class="link" to="/about-us">About Us</router-link>
@@ -21,8 +21,6 @@
 </template>
 
 <script lang="ts" setup>
-const router = useRouter()
-const currentRouteName = computed(() => router.currentRoute.value.name)
 </script>
 
 <style lang="scss" scoped>
