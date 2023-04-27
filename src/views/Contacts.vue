@@ -30,7 +30,8 @@
     />
   </div>
 
-  <div class="grid-cols-[repeat(auto-fill,_minmax(320px,_1fr))] grid gap-5 my-5">
+  <!-- <div class="grid-cols-[repeat(auto-fill,_minmax(320px,_1fr))] grid gap-5 my-5"> -->
+  <TransitionGroup class="grid-cols-[repeat(auto-fill,_minmax(320px,_1fr))] grid gap-5 my-5" tag="div" name="contacts">
     <ContactItem
       v-for="contact in filteredContacts"
       :key="contact.id"
@@ -40,7 +41,8 @@
       @delete="deleteContact"
       @save="updateContact"
     />
-  </div>
+  </TransitionGroup>
+  <!-- </div> -->
 </template>
 <script lang="ts" setup>
 import { useRouter } from 'vue-router'
@@ -99,3 +101,29 @@ function togggleSortOrderSelectOpen () {
   sortOrderSelectOpen.value = !sortOrderSelectOpen.value
 }
 </script>
+
+<style lang="scss" scoped>
+.contacts-enter-active, .contacts-move, .contacts-leave-active {
+  transition: all 1s ease;
+}
+
+.contacts-enter-from {
+  transform: scale(0);
+  opacity: 0;
+}
+
+.contacts-enter-to {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.contacts-leave-from {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.contacts-leave-to {
+  opacity: 0;
+  transform: scale(0);
+}
+</style>
