@@ -82,8 +82,6 @@ export const useContactsStore = defineStore('contactsStore', () => {
 
       const matchRegExp = new RegExp(preparedSearchQuery.split(/\s+/g).join('|'), 'i')
 
-      console.log(matchRegExp)
-
       filteredContacts.value = contacts.value.filter((c) => {
         const nameDescription = `${c.name} ${c.description}`.toLocaleLowerCase()
         const includesRole = selectedRoles.includes(c.role)
