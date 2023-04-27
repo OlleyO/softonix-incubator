@@ -9,14 +9,7 @@
         Add Contact
       </AppButton>
     </div>
-
-    <div class="flex flex-col gap-4">
-      <SearchInput v-model="searchQuery" />
-      <label class="text-sm font-medium grid max-w-fit gap-3 grid-flow-col" for="matchFlag">
-        Apply full match
-        <input id="matchFlag" v-model="matchFlag" class="self-center" type="checkbox">
-      </label>
-    </div>
+    <SearchInput v-model="searchQuery" />
   </div>
   <div class="flex justify-between mt-6">
     <Select
@@ -66,7 +59,7 @@ import type { IOption } from '@/components/Select.vue'
 const router = useRouter()
 
 const contactsStore = useContactsStore()
-const { searchQuery, filteredContacts, matchFlag, roles, selectedRoles, sortOrder } = storeToRefs(contactsStore)
+const { searchQuery, filteredContacts, roles, selectedRoles, sortOrder } = storeToRefs(contactsStore)
 const { updateContact, deleteContact, resetAll } = contactsStore
 
 const rolesSelectOpen = ref(false)

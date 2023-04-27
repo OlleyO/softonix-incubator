@@ -55,8 +55,6 @@ export const useContactsStore = defineStore('contactsStore', () => {
   const filteredContacts = ref<IContact[]>([...contacts.value])
 
   const searchQuery = ref('')
-  // if active, full-match filter contacts
-  const matchFlag = ref(true)
 
   function addContact (contact: IContact) {
     contacts.value.push(contact)
@@ -76,23 +74,25 @@ export const useContactsStore = defineStore('contactsStore', () => {
     filteredContacts.value = [...contacts]
   })
 
-  watch([searchQuery, matchFlag, selectedRoles],
-    ([searchQuery, matchFlag, selectedRoles]) => {
+  watch([searchQuery, selectedRoles],
+    ([searchQuery, selectedRoles]) => {
       const preparedSearchQuery = `${searchQuery}`.trim().toLowerCase()
 
       if (!preparedSearchQuery && !selectedRoles.length) filteredContacts.value = [...contacts.value]
 
-      const fullyMatchRegExp = new RegExp(preparedSearchQuery, 'gi')
-      const partlyMatchRegExp = new RegExp(preparedSearchQuery.split(/\s+/g).join('|'), 'gi')
+      const matchRegExp = new RegExp(preparedSearchQuery.split(/\s+/g).join('|'), 'i')
 
-      filteredContacts.value = contacts.value.filter((contact) => {
-        const nameDescription = `${contact.name} ${contact.description}`.toLocaleLowerCase()
+      console.log(matchRegExp)
 
-        return (matchFlag
-          ? selectedRoles.length
-            ? fullyMatchRegExp.test(nameDescription) && selectedRoles.includes(contact.role)
-            : fullyMatchRegExp.test(nameDescription)
-          : partlyMatchRegExp.test(nameDescription) || selectedRoles.includes(contact.role))
+      filteredContacts.value = contacts.value.filter((c) => {
+        const nameDescription = `${c.name} ${c.description}`.toLocaleLowerCase()
+        const includesRole = selectedRoles.includes(c.role)
+        const nameDescriptionMatchedFully = matchRegExp.test(nameDescription)
+
+        return (
+          selectedRoles.length
+            ? nameDescriptionMatchedFully && includesRole
+            : nameDescriptionMatchedFully)
       })
     })
 
@@ -107,14 +107,13 @@ export const useContactsStore = defineStore('contactsStore', () => {
         trimmedNoNonWordLocaleLowerCasedString(c2.name).localeCompare(trimmedNoNonWordLocaleLowerCasedString(c1.name)))
       break
     default:
-      filteredContacts.value = contacts.value.filter(con => filteredContacts.value.find(elem => elem.id === con.id))
+      filteredContacts.value = contacts.value.filter(c => filteredContacts.value.find(fc => fc.id === c.id))
       break
     }
   })
 
   function resetAll () {
     selectedRoles.value = []
-    matchFlag.value = true
     searchQuery.value = ''
     sortOrder.value = 'default'
     filteredContacts.value = [...contacts.value]
@@ -125,7 +124,6 @@ export const useContactsStore = defineStore('contactsStore', () => {
     roles,
     selectedRoles,
     searchQuery,
-    matchFlag,
     sortOrder,
     addContact,
     deleteContact,
