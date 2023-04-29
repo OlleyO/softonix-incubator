@@ -1,5 +1,6 @@
 import AutoImport from 'unplugin-auto-import/vite'
 import type { ConfigEnv } from 'vite'
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
 /* CONFIGURATION FOR SCRIPTS AUTO-IMPORT */
 export const ImportsBuilder = (config: ConfigEnv) => AutoImport({
@@ -22,5 +23,6 @@ export const ImportsBuilder = (config: ConfigEnv) => AutoImport({
     'vue',
     'vue-router',
     'pinia'
-  ]
+  ],
+  resolvers: [ElementPlusResolver()]
 })
