@@ -1,6 +1,6 @@
 <template>
-  <AppHeader>
-    <template #suffix>
+  <LayoutWithHeader>
+    <template #headerSuffix>
       <AppButton @click="createNewContact">
         <template #icon>
           <IconPlus class="w-5 h-5" />
@@ -8,21 +8,22 @@
         Add Contact
       </AppButton>
     </template>
-  </AppHeader>
 
-  <div class="grid-cols-[repeat(auto-fill,_minmax(320px,_1fr))] grid gap-5 my-5">
-    <ContactItem
-      v-for="contact in contacts"
-      :key="contact.id"
-      class="cursor-pointer"
-      :contact="contact"
-      @click="editContact(contact.id)"
-      @delete="deleteContact"
-      @save="updateContact"
-    />
-  </div>
+    <div class="grid-cols-[repeat(auto-fill,_minmax(320px,_1fr))] grid gap-5 my-5">
+      <ContactItem
+        v-for="contact in contacts"
+        :key="contact.id"
+        class="cursor-pointer"
+        :contact="contact"
+        @click="editContact(contact.id)"
+        @delete="deleteContact"
+        @save="updateContact"
+      />
+    </div>
+  </LayoutWithHeader>
 </template>
 <script lang="ts" setup>
+import LayoutWithHeader from '@/layouts/LayoutWithHeader.vue'
 import ContactItem from './components/ContactItem.vue'
 
 const router = useRouter()
