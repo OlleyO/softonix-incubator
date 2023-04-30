@@ -11,7 +11,7 @@ export const useJobOpeningsStore = defineStore('jobOpeningsStore', () => {
   })
 
   const totalJobOpeningsNumber = computed(() => {
-    return groupedJobOpenings.value.reduce((acc, curr) => acc + curr.jobOpenings.length, 0)
+    return filteredJobOpenings.value.reduce((acc, curr) => acc + curr.jobOpenings.length, 0)
   })
 
   const visibleJobOpeningSizeMgs =
