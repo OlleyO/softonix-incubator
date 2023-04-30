@@ -29,7 +29,7 @@ const props = defineProps<{
 }>()
 
 const jobOpeningsStore = useJobOpeningsStore()
-const { setVisibleSize } = jobOpeningsStore
+const { increaseVisibleJobOpeningsNumber } = jobOpeningsStore
 
 const jobOpeningGroupSize = 5
 
@@ -43,19 +43,19 @@ const hasMoreItems = computed(() => visibleJobOpenings.value.length < props.jobO
 
 function showMore () {
   currentIndex.value += jobOpeningGroupSize
-  setVisibleSize(visibleJobOpenings.value.length % jobOpeningGroupSize || jobOpeningGroupSize)
+  increaseVisibleJobOpeningsNumber(visibleJobOpenings.value.length % jobOpeningGroupSize || jobOpeningGroupSize)
 }
 
 onMounted(() => {
-  setVisibleSize(visibleJobOpenings.value.length)
+  increaseVisibleJobOpeningsNumber(visibleJobOpenings.value.length)
 })
 
 onUnmounted(() => {
-  setVisibleSize(-visibleJobOpenings.value.length)
+  increaseVisibleJobOpeningsNumber(-visibleJobOpenings.value.length)
 })
 
 function hide () {
-  setVisibleSize(-(visibleJobOpenings.value.length - jobOpeningGroupSize))
+  increaseVisibleJobOpeningsNumber(-(visibleJobOpenings.value.length - jobOpeningGroupSize))
   currentIndex.value = jobOpeningGroupSize
 }
 </script>

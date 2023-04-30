@@ -5,7 +5,7 @@ export const useJobOpeningsStore = defineStore('jobOpeningsStore', () => {
   const departments = ref<IDepartment[]>(departmentsData)
   const jobOpenings = ref<IJobOpening[]>(jobOpeningsData)
   const selectedDepartments = ref<string[]>([])
-  const visibleJobOpeningsSize = ref(0)
+  const visibleJobOpeningsNumber = ref(0)
 
   const groupedJobOpenings = computed<IDepartmentWithJobOpenings[]>(() => {
     const initialOther: IGroupedOpeningsWithOthers['other'] = {
@@ -49,11 +49,12 @@ export const useJobOpeningsStore = defineStore('jobOpeningsStore', () => {
     return keys.map(key => withDepartments[key])
   })
 
-  const totalNumber = computed(() => {
+  const totalJobOpeningsNumber = computed(() => {
     return groupedJobOpenings.value.reduce((acc, curr) => acc + curr.jobOpenings.length, 0)
   })
 
-  const visibleJobOpeningSizeMgs = computed(() => `Showing ${visibleJobOpeningsSize.value} out of ${totalNumber.value}`)
+  const visibleJobOpeningSizeMgs =
+   computed(() => `Showing ${visibleJobOpeningsNumber.value} out of ${totalJobOpeningsNumber.value}`)
 
   const filteredJobOpenings = computed(() =>
     !selectedDepartments.value.length
@@ -61,8 +62,8 @@ export const useJobOpeningsStore = defineStore('jobOpeningsStore', () => {
       : groupedJobOpenings.value.filter(({ value }) => selectedDepartments.value.includes(value))
   )
 
-  function setVisibleSize (num: number) {
-    visibleJobOpeningsSize.value += num
+  function increaseVisibleJobOpeningsNumber (num: number) {
+    visibleJobOpeningsNumber.value += num
   }
 
   return {
@@ -71,9 +72,7 @@ export const useJobOpeningsStore = defineStore('jobOpeningsStore', () => {
     groupedJobOpenings,
     selectedDepartments,
     filteredJobOpenings,
-    visibleJobOpeningsSize,
-    totalNumber,
     visibleJobOpeningSizeMgs,
-    setVisibleSize
+    increaseVisibleJobOpeningsNumber
   }
 })
