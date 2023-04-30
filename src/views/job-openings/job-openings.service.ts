@@ -56,6 +56,10 @@ class JobOpeningsService {
       ? [...groupedJobOpenings]
       : groupedJobOpenings.filter(({ value }) => selectedDepartments.includes(value))
   }
+
+  getTotalGroupedJobOpeningsNumber (jobOpenings: IDepartmentWithJobOpenings[]) {
+    return jobOpenings.reduce((acc, curr) => acc + curr.jobOpenings.length, 0)
+  }
 }
 
 export const jobOpeningsService = new JobOpeningsService()

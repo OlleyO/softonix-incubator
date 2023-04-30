@@ -6,13 +6,13 @@ export const useJobOpeningsStore = defineStore('jobOpeningsStore', () => {
   const selectedDepartments = ref<string[]>([])
   const visibleJobOpeningsNumber = ref(0)
 
-  const groupedJobOpenings = computed<IDepartmentWithJobOpenings[]>(() => {
-    return jobOpeningsService.groupAndSortJobOpeningsByDepartments(jobOpenings.value, departments.value)
-  })
+  const groupedJobOpenings = computed<IDepartmentWithJobOpenings[]>(() =>
+    jobOpeningsService.groupAndSortJobOpeningsByDepartments(jobOpenings.value, departments.value)
+  )
 
-  const totalJobOpeningsNumber = computed(() => {
-    return filteredJobOpenings.value.reduce((acc, curr) => acc + curr.jobOpenings.length, 0)
-  })
+  const totalJobOpeningsNumber = computed<number>(() =>
+    jobOpeningsService.getTotalGroupedJobOpeningsNumber(filteredJobOpenings.value)
+  )
 
   const visibleJobOpeningSizeMgs =
    computed(() => `Showing ${visibleJobOpeningsNumber.value} out of ${totalJobOpeningsNumber.value}`)
