@@ -23,17 +23,15 @@
 <script lang="ts" setup>
 import JobOpeningItem from './JobOpeningItem.vue'
 
+const props = defineProps<{
+  department: IDepartment
+  jobOpenings: IJobOpening[]
+}>()
+
 const jobOpeningsStore = useJobOpeningsStore()
 const { setVisibleSize } = jobOpeningsStore
 
 const jobOpeningGroupSize = 5
-
-interface IProps {
-  department: IDepartment
-  jobOpenings: IJobOpening[]
-}
-
-const props = defineProps<IProps>()
 
 const currentIndex = ref(jobOpeningGroupSize)
 

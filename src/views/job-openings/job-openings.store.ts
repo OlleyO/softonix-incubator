@@ -40,7 +40,7 @@ export const useJobOpeningsStore = defineStore('jobOpeningsStore', () => {
       other: initialOther
     } as IGroupedOpeningsWithOthers)
 
-    // Put 'other' in the end of the group
+    // Putting 'other' in the end of the group
     const keys = Object.keys(withDepartments).sort((a, b) => a === 'other' || b === 'other'
       ? -1
       : a.replace(/\W+/, '').localeCompare(b.replace(/\W+/, ''
@@ -52,6 +52,8 @@ export const useJobOpeningsStore = defineStore('jobOpeningsStore', () => {
   const totalNumber = computed(() => {
     return groupedJobOpenings.value.reduce((acc, curr) => acc + curr.jobOpenings.length, 0)
   })
+
+  const visibleJobOpeningSizeMgs = computed(() => `Showing ${visibleJobOpeningsSize.value} out of ${totalNumber.value}`)
 
   const filteredJobOpenings = computed(() =>
     !selectedDepartments.value.length
@@ -71,6 +73,7 @@ export const useJobOpeningsStore = defineStore('jobOpeningsStore', () => {
     filteredJobOpenings,
     visibleJobOpeningsSize,
     totalNumber,
+    visibleJobOpeningSizeMgs,
     setVisibleSize
   }
 })

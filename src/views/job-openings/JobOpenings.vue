@@ -19,7 +19,7 @@
     />
   </ElSelect>
 
-  <p>Showing {{ visibleJobOpeningsSize }} out of {{ totalNumber }} </p>
+  <p>{{ visibleJobOpeningSizeMgs }}</p>
   <div class="flex flex-col max-w-2xl gap-12 py-5 mx-auto">
     <DepartmentGroupItem
       v-for="group in filteredJobOpenings"
@@ -38,20 +38,22 @@
 </template>
 
 <script lang="ts" setup>
-import { useJobOpeningsStore } from './job-openings.store'
-import DepartmentGroupItem from './components/DepartmentGroupItem.vue'
 import { useIntersectionObserver } from '@vueuse/core'
+
+import { useJobOpeningsStore } from './job-openings.store'
+
+import DepartmentGroupItem from './components/DepartmentGroupItem.vue'
 
 const heading = ref<HTMLAnchorElement | null>(null)
 const showToTop = ref(false)
 
-useIntersectionObserver(heading, ([{ isIntersecting }]) => {
-  showToTop.value = !isIntersecting
-})
-
 const jobOpeningStore = useJobOpeningsStore()
 const {
   selectedDepartments, filteredJobOpenings,
-  groupedJobOpenings, visibleJobOpeningsSize, totalNumber
+  groupedJobOpenings, visibleJobOpeningSizeMgs
 } = storeToRefs(jobOpeningStore)
+
+useIntersectionObserver(heading, ([{ isIntersecting }]) => {
+  showToTop.value = !isIntersecting
+})
 </script>

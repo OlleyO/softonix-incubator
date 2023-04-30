@@ -13,9 +13,7 @@
 </template>
 
 <script lang="ts" setup>
-interface IProps {
+defineProps<{
   jobOpening: IJobOpening
-}
-
-defineProps<IProps>()
+}>()
 </script>
