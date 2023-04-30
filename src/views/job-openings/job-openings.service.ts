@@ -17,6 +17,10 @@ class JobOpeningsService {
       jobOpenings: []
     }
 
+    // Decided to first create an object and then transform it into an array,
+    // 'cause otherwise I should check if the array contains department using find
+    // for every new department before inserting,
+    // which is slower than accessing object key
     const withDepartments = jobOpenings.reduce((prev, jo) => {
       jo.departments.forEach(dep => {
         const department = departments.find(({ value }) => dep === value)
