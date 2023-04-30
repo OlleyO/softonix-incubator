@@ -5,16 +5,15 @@ export const useJobOpeningsStore = defineStore('jobOpeningsStore', () => {
   const departments = ref<IDepartment[]>(departmentsData)
   const jobOpenings = ref<IJobOpening[]>(jobOpeningsData)
   const selectedDepartments = ref<string[]>([])
+  const visibleJobOpeningsSize = ref(0)
 
-  const filteredJobOpenings = computed(() => {
-    return !selectedDepartments.value.length
-      ? { ...groupedJobOpenings.value }
-      : groupedJobOpenings.value.filter(({ value }) => selectedDepartments.value.includes(value))
-  })
+  const groupedJobOpenings = computed<IDepartmentWithJobOpenings[]>(() => {
+    const initialOther: IGroupedOpeningsWithOthers['other'] = {
+      name: 'Other',
+      value: 'other',
+      jobOpenings: []
+    }
 
-  const groupedJobOpenings = computed(() => {
-    let other: IJobOpening[] = []
-    const departmentsWithJobs: {[index: string]: IDepartment} = {}
     const withDepartments = jobOpenings.value.reduce((prev, jo) => {
       if (jo.departments.length) {
         for (let i = 0; i < jo.departments.length; i++) {
@@ -30,43 +29,48 @@ export const useJobOpeningsStore = defineStore('jobOpeningsStore', () => {
             } else {
               prev[dep].jobOpenings = [...prev[dep].jobOpenings, { ...jo }]
             }
-            departmentsWithJobs[department.name] = { ...department }
           }
         }
       } else {
-        other = [...other, { ...jo }]
+        prev.other.jobOpenings = [...prev.other.jobOpenings, { ...jo }]
       }
 
       return prev
-    }, { } as IGroupedOpenings)
+    }, {
+      other: initialOther
+    } as IGroupedOpeningsWithOthers)
 
-    const sortedDepartments = []
+    // Put 'other' in the end of the group
+    const keys = Object.keys(withDepartments).sort((a, b) => a === 'other' || b === 'other'
+      ? -1
+      : a.replace(/\W+/, '').localeCompare(b.replace(/\W+/, ''
+      )))
 
-    for (const key in departmentsWithJobs) {
-      sortedDepartments.push(departmentsWithJobs[key])
-    }
-
-    sortedDepartments.sort((a, b) => a.value.replace(/\W+/, '').localeCompare(b.value.replace(/\W+/, ''
-    )))
-
-    const sortedJobOpenings: IDepartmentWithJobOpenings[] = []
-
-    sortedDepartments.forEach(dep => sortedJobOpenings.push(withDepartments[dep.value]))
-
-    sortedJobOpenings.push({
-      name: 'Other',
-      value: 'other',
-      jobOpenings: [...other]
-    })
-
-    return sortedJobOpenings
+    return keys.map(key => withDepartments[key])
   })
+
+  const totalNumber = computed(() => {
+    return groupedJobOpenings.value.reduce((acc, curr) => acc + curr.jobOpenings.length, 0)
+  })
+
+  const filteredJobOpenings = computed(() =>
+    !selectedDepartments.value.length
+      ? [...groupedJobOpenings.value]
+      : groupedJobOpenings.value.filter(({ value }) => selectedDepartments.value.includes(value))
+  )
+
+  function setVisibleSize (num: number) {
+    visibleJobOpeningsSize.value += num
+  }
 
   return {
     departments,
     jobOpenings,
     groupedJobOpenings,
     selectedDepartments,
-    filteredJobOpenings
+    filteredJobOpenings,
+    visibleJobOpeningsSize,
+    totalNumber,
+    setVisibleSize
   }
 })

@@ -19,9 +19,12 @@ interface IGroupedOpenings {
   }
 }
 
-interface IGroupedJobOpeningsAndDepartments {
-  jobOpenings: {[key: string]: IJobOpening[]}
-  departments: IDepartment[]
+interface IGroupedOpeningsWithOthers extends IGroupedOpenings {
+  other: {
+    name: 'Other',
+    value: 'other',
+    jobOpenings: IJobOpening[]
+  }
 }
 
 interface IDepartmentWithJobOpenings {
