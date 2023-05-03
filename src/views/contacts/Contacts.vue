@@ -17,25 +17,35 @@
       Logout
     </el-button>
   </div>
-
-  <div class="grid-cols-[repeat(auto-fill,_minmax(320px,_1fr))] grid gap-5 my-5">
-    <ContactItem
-      v-for="contact in contacts"
-      :key="contact.id"
-      class="cursor-pointer"
-      :contact="contact"
-      @click="editContact(contact.id)"
-      @delete="deleteContact"
-      @save="updateContact"
-    />
-  </div>
+  <el-tabs v-model="activeTab">
+    <el-tab-pane label="Card View" name="card">
+      <CardView
+        :contacts="contacts"
+        @itemDelete="deleteContact"
+        @itemSave="updateContact"
+        @itemClick="editContact"
+      />
+    </el-tab-pane>
+    <el-tab-pane label="Table View" name="table">
+      <TableView
+        :contacts="contacts"
+        @itemDelete="deleteContact"
+        @itemSave="updateContact"
+        @itemClick="editContact"
+      />
+    </el-tab-pane>
+  </el-tabs>
 </template>
 <script lang="ts" setup>
+import CardView from './components/tab-views/card-view/CardView.vue'
+import TableView from './components/tab-views/table-view/TableView.vue'
+
 const router = useRouter()
+
 const { $routeNames } = useGlobalProperties()
 
 const contactsStore = useContactsStore()
-const { contacts } = storeToRefs(contactsStore)
+const { contacts, activeTab } = storeToRefs(contactsStore)
 const { updateContact, deleteContact } = contactsStore
 
 function createNewContact () {

@@ -7,15 +7,22 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    AppAvatarImage: typeof import('./../src/components/AppAvatarImage.vue')['default']
     AppButton: typeof import('./../src/components/AppButton.vue')['default']
+    AppImage: typeof import('./../src/components/AppImage.vue')['default']
     AppInput: typeof import('./../src/components/AppInput.vue')['default']
     Card: typeof import('./../src/components/Card.vue')['default']
-    ContactItem: typeof import('./../src/views/contacts/components/ContactItem.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCard: typeof import('element-plus/es')['ElCard']
     ElForm: typeof import('element-plus/es')['ElForm']
     ElFormItem: typeof import('element-plus/es')['ElFormItem']
+    ElImage: typeof import('element-plus/es')['ElImage']
     ElInput: typeof import('element-plus/es')['ElInput']
+    ElTable: typeof import('element-plus/es')['ElTable']
+    ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
+    ElTableColumns: typeof import('element-plus/es')['ElTableColumns']
+    ElTabPane: typeof import('element-plus/es')['ElTabPane']
+    ElTabs: typeof import('element-plus/es')['ElTabs']
     IconEnvelope: typeof import('./../src/components/icons/IconEnvelope.vue')['default']
     IconPhone: typeof import('./../src/components/icons/IconPhone.vue')['default']
     IconPlus: typeof import('./../src/components/icons/IconPlus.vue')['default']

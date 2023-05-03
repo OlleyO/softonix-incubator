@@ -17,8 +17,28 @@ export const useContactsStore = defineStore('contactsStore', () => {
       name: 'Cody Fisher',
       description: 'Product Directives Officer',
       image: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60'
+    },
+    {
+      id: 4,
+      name: 'Esther Howard',
+      description: 'Forward Response Developer',
+      image: 'https://images.unsplash.com/photo-1520813792240-56fc4a3765a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60'
+    },
+    {
+      id: 5,
+      name: 'Jane Cooper',
+      description: 'Regional Paradigm Technician Regional Paradigm Technician Regional Paradigm Technician',
+      image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60'
+    },
+    {
+      id: 6,
+      name: 'Cody Fisher',
+      description: 'Product Directives Officer',
+      image: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60'
     }
   ])
+
+  const activeTab = ref<'card'| 'table'>('card')
 
   function addContact (contact: IContact) {
     contacts.value.push(contact)
@@ -36,6 +56,7 @@ export const useContactsStore = defineStore('contactsStore', () => {
 
   return {
     contacts,
+    activeTab,
     addContact,
     deleteContact,
     updateContact

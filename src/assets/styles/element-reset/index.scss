@@ -3,9 +3,15 @@
     'primary': (
       'base': #3b82f6, // todo: this MUST be a valid 6-digit HEX color in order to make it correctly work
     ),
+    'danger': (
+      'base': #ef4444,
+    )
   ),
   $button-border-radius: (
-    'default': 20px,
+    'default': 4px,
+  ),
+  $button-padding-horizontal: (
+    'default': 8px,
   )
 );
 
@@ -14,3 +20,5 @@
 @use "element-plus/theme-chalk/src/form";
 @use "element-plus/theme-chalk/src/input";
 @use "element-plus/theme-chalk/src/card";
+@use "element-plus/theme-chalk/src/tabs";
+@use "element-plus/theme-chalk/src/table";
