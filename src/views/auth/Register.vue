@@ -2,7 +2,7 @@
   <div class="max-w-[500px] m-auto">
     <el-card v-loading="loading">
       <template #header>
-        <p class="font-semibold text-xl">Login</p>
+        <p class="font-semibold text-xl">Register</p>
       </template>
 
       <el-form
@@ -21,7 +21,7 @@
         </el-form-item>
 
         <el-button native-type="submit" :type="$elComponentType.primary">
-          Login
+          Register
         </el-button>
       </el-form>
     </el-card>
@@ -29,9 +29,7 @@
 </template>
 
 <script lang="ts" setup>
-const router = useRouter()
-const { $routeNames } = useGlobalProperties()
-const { login, setError } = useAuthStore()
+const { register, setError } = useAuthStore()
 
 const formRef = useElFormRef()
 
@@ -51,8 +49,7 @@ function submit () {
     if (isValid) {
       loading.value = true
 
-      login(formModel)
-        .then(() => router.push({ name: $routeNames.contacts }))
+      register(formModel)
         .catch((err) => setError(err))
         .finally(() => (loading.value = false))
     }

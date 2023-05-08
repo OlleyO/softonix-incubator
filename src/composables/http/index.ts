@@ -9,7 +9,18 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   config => {
-    const { accessToken } = useAuthStore()
+    const { accessToken, refreshToken, loginTime, setToken, expiresIn } = useAuthStore()
+    const currentTime = new Date().getTime()
+
+    if (expiresIn && loginTime) {
+      if (currentTime - loginTime > expiresIn) {
+        if (refreshToken) {
+          authService.refreshToken(refreshToken).then(res => {
+            setToken(res.access_token)
+          })
+        }
+      }
+    }
 
     if (accessToken) {
       config.headers = {

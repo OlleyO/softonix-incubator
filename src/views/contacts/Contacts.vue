@@ -32,6 +32,8 @@
 </template>
 
 <script lang="ts" setup>
+import ContactItem from './components/ContactItem.vue'
+
 const { $routeNames } = useGlobalProperties()
 
 const router = useRouter()
