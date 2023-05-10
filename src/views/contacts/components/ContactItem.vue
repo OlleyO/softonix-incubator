@@ -20,25 +20,27 @@
         </template>
       </div>
 
-      <div
+      <LazyImage
         class="flex items-center justify-center w-[40px] h-[40px] ml-2 rounded-full shrink-0 overflow-hidden
-      border border-gray-medium bg-gray-ultra-light"
+       bg-gray-ultra-light"
+        :src="contact.image"
+        img-class="object-cover"
       >
-        <span
-          v-if="imageHasError"
-          class="font-medium uppercase"
-        >{{ nameAbbrv }}
-        </span>
-
-        <img
-          v-else
-          class="object-cover"
-          src="https://images.unsplash.com/photo-1520813792240-56fc4a3765a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60"
-          alt="contact-logo"
-          @error="imageHasError = true"
-          @load="imageHasError = false"
+        <template
+          #error
         >
-      </div>
+          <div class="font-medium uppercase">
+            {{ nameAbbrv }}
+          </div>
+        </template>
+        <template #loading>
+          <el-skeleton style="--el-skeleton-circle-size: 40px" animated>
+            <template #template>
+              <el-skeleton-item variant="circle" />
+            </template>
+          </el-skeleton>
+        </template>
+      </Lazyimage>
     </div>
 
     <div class="flex justify-end mt-2 gap-2">
@@ -122,6 +124,4 @@ function onSave () {
   emit('save', localContact.value)
   editMode.value = false
 }
-
-const imageHasError = ref(false)
 </script>

@@ -34,6 +34,7 @@
 </template>
 
 <script lang="ts" setup>
+import ContactItem from './components/ContactItem.vue'
 const AsyncExample = defineAsyncComponent(() => import('./components/AsyncExample.vue'))
 
 const { $routeNames } = useGlobalProperties()
